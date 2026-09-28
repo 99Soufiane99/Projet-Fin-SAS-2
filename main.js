@@ -48,25 +48,8 @@ const candidats = [{
     electeurs: ['a33jttk','2rkk23']
 },];
 
-//function bach ntcheki wach candidat deja kayn ola la baach naydkhalch joj diyal lmarat
-function check(value, propriete,choix){
-    for(let i = 0; i < candidats.length;i++){
-            if(value == candidats[i][propriete]){
-                switch(choix){
-                    case "boulean":
-                        return true
-                    case "index":
-                        return i
-                    case "value":
-                        return candidats[i][propriete]
-                }
-        }
-    }
-    return false
-}
-
 // function bach Afficher la liste des candidat
-function afficherlist(choix){
+function afficherlist(){
     console.log(`____________________ choisi une nambre pour continue ___________________
 1. pour aficher list des candidat
 ________________________________________________________________________
@@ -74,7 +57,7 @@ ________________________________________________________________________
 ________________________________________________________________________
 3. afficher uniquement les candidat d'un parti politique specifique.
 ________________________________________________________________________`)
-    choix = Number(prompt("votre choix : "))
+    let choix = Number(prompt("votre choix : "))
 
     switch(choix){
         case 1:
@@ -154,9 +137,11 @@ __________________________________________________________\n`)
 // function diyal list bach tzid candidat
 function candidat(){
     let cin = prompt("ajouter cin de candidat : ")
-    if(check(cin,"cin", "boulean")){
-        prompt("la CIN de candidat existe deja, clique sure entree pour retourne aux menu.")
+    for(let i = 0; i < candidats.length; i++){
+        if(cin == candidats[i].cin){
+            prompt("la CIN de candidat existe deja, clique sure entree pour retourne aux menu.")
         return
+        }
     }
     let candid = {}
     candid.cin = cin
