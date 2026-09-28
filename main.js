@@ -2,31 +2,68 @@ const prompt = require('prompt-sync')()
 
 //list diyal les candidats
 const candidats = [{
-    cin: "AB12456",
-    nom: "Boushaba",
-    prenom: "Soufiane",
-    partiPolitique: "Indépendant",
+    cin: "ABO2456",
+    nom: "bomahdi",
+    prenom: "monsife",
+    partiPolitique: "Independant",
     age: 40,
-    electeurs: ['ajttk','aj2323r','asdfwe']
+    electeurs: ['A19038','Cj83484',':sjuei333']
 },
 {
-    cin: "AB12346",
+    cin: "B12346",
     nom: "Boush",
     prenom: "mohammed",
-    partiPolitique: "Indépendant",
+    partiPolitique: "Independant",
     age: 40,
-    electeurs: ['ajttk','23r23ior3','2wr323r','2wr3k23r']
+    electeurs: ['Kj1232','L3r23ior3','Qwr323r','Zwr3k23r']
 },{
-    cin: "AB123456",
+    cin: "CB123456",
     nom: "amzyan",
     prenom: "zakaria",
-    partiPolitique: "Indépendant",
-    age: 40,
-    electeurs: ['ajttk','2r3kkkkk23']
+    partiPolitique: "alasala",
+    age: 21,
+    electeurs: ['X23ttk','2r3kkkkk23']
+},
+{
+    cin: "AB12456",
+    nom: "maghribi",
+    prenom: "ali",
+    partiPolitique: "Independant",
+    age: 49,
+    electeurs: ['O19038','Sj83484','Gsjuei333']
+},
+{
+    cin: "TA2346",
+    nom: "amir",
+    prenom: "mohammed",
+    partiPolitique: "Independant",
+    age: 43,
+    electeurs: ['N1232','Lr23ior3','Ewr323r','Pwr3k23r']
+},{
+    cin: "IO23456",
+    nom: "amlil",
+    prenom: "anas",
+    partiPolitique: "alasala",
+    age: 33,
+    electeurs: ['a33jttk','2rkk23']
 },];
 
 //function bach ntcheki wach candidat deja kayn ola la baach naydkhalch joj diyal lmarat
-
+function check(value, propriete,choix){
+    for(let i = 0; i < candidats.length;i++){
+            if(value == candidats[i][propriete]){
+                switch(choix){
+                    case "boulean":
+                        return true
+                    case "index":
+                        return i
+                    case "value":
+                        return candidats[i][propriete]
+                }
+        }
+    }
+    return false
+}
 
 // function bach Afficher la liste des candidat
 function afficherlist(choix){
@@ -59,12 +96,15 @@ ________________________________________________________________________  \n\n`)
     prompt("clicke sur entree pour retourne aux menu")
     break
     case 2:
+        /*kanjma3 les votes bla mayt3awdo f array votes,
+        mn ba3d kanratabhom mn lakbir lsghir,had kan afichier 
+        les candidats 3la 7sab les votes dyalhom. */
         let votes = []
         for(let i = 0;i < candidats.length; i++){
             if(!(votes.includes(candidats[i].electeurs.length)))
             votes.push(candidats[i].electeurs.length)
         }
-        for(let i = 0;i < votes.length; i++){
+        for(let i = 0;i < votes.length - 1; i++){
             for(let j = i+1; j < votes.length; j++){
                 if(votes[i] < votes[j]){
                     let temp = votes[i]
@@ -76,13 +116,36 @@ ________________________________________________________________________  \n\n`)
         for(let i = 0 ; i < votes.length; i++){
             for(let j = 0 ; j< candidats.length; j++){
                 if(candidats[j].electeurs.length == votes[i])
-                    console.log(`${candidats[j].nom} : ${votes[i]}`)
+                    console.log(`_____________________________________________
+nom             : ${candidats[j].nom}
+__________________________________________________________
+prenom          : ${candidats[j].prenom}
+__________________________________________________________
+parti politique : ${candidats[j].partiPolitique}
+__________________________________________________________
+nombre de votes : ${candidats[j].electeurs.length} votes
+__________________________________________________________`)
             }
         }
         prompt("clicke sur entree pour retourne aux menu")
         break
     case 3:
-        console.log("afficher uniquement les candidat d'un parti politique specifique.(no't available in this momment)")
+        let nombrepolitique = 0
+        let partipolitiquefilter = prompt(`ecrire parti politique : `)
+        for(let i = 0; i < candidats.length; i++){
+            if(partipolitiquefilter == candidats[i].partiPolitique){
+                console.log(`______________________________________________
+__________________________________________________________
+nom             : ${candidats[i].nom}
+__________________________________________________________
+prenom          : ${candidats[i].prenom}
+__________________________________________________________
+parti politique : ${candidats[i].partiPolitique}
+__________________________________________________________\n`)
+                    nombrepolitique++
+            }
+        }
+        console.log(`${nombrepolitique} candidats dans le parti politique ${partipolitiquefilter}\n`)
         prompt("clicke sur entree pour retourne aux menu")
         break
     }
@@ -90,11 +153,16 @@ ________________________________________________________________________  \n\n`)
 }
 // function diyal list bach tzid candidat
 function candidat(){
+    let cin = prompt("ajouter cin de candidat : ")
+    if(check(cin,"cin", "boulean")){
+        prompt("la CIN de candidat existe deja, clique sure entree pour retourne aux menu.")
+        return
+    }
     let candid = {}
-    candid.cin = prompt("ajouter cin de candidat : ")
+    candid.cin = cin
     candid.nom = prompt("ajouter nom de candidat : ")
     candid.prenom = prompt("ajouter prenom de candidat : ")
-    candid.partipolitique = prompt("ajouter parti politique de candidat : ")
+    candid.partiPolitique = prompt("ajouter parti politique de candidat : ")
     candid.age = Number(prompt("ajouter age de candidate : "))
     candid.electeurs = []
     candidats.push(candid)
@@ -103,6 +171,7 @@ function candidat(){
 function nouveaucandidat(){
     console.log(`\nle minimum nombre s'est 1 | 0. pour retourne aux menu |\n`)
     let number = Number(prompt(`ecrie comme bient de candida doit ajouter : `))
+    
              if(number === 0) {
             return
         }
@@ -121,11 +190,11 @@ function nouveaucandidat(){
 function votercandidat(){
     console.log('entre votre CIN pour vote ')
     let cin = prompt(`entre votre CIN : `)
-    for(let i = 0; i < candidats.length; i++){
+   for(let i = 0; i < candidats.length; i++){
         for(let j = 0; j < candidats[i].electeurs.length; j++){
             if(cin == candidats[i].electeurs[j]){
                 console.log(' Vous avez déjà voté et vous n’avez pas le droit de modifier votre vote ni de voter à nouveau')
-                prompt("clicke sure entree pour returne aux menu")
+                prompt(`clicke sure entree pour returne aux menu`)
                 return
                 }
             
@@ -135,6 +204,8 @@ function votercandidat(){
     for(let i = 0; i < candidats.length; i++){
         if(cincandidat == candidats[i].cin){
             candidats[i].electeurs.push(cin)
+            prompt("vote termine, clicke sure entree pour retourne aux menu.")
+            return
         }
     }
     console.log("les information n'apas corecte ")
@@ -144,11 +215,11 @@ function votercandidat(){
 // function bach supprimer candidat mn cin diyalo
 
 function supprimercandidat(){
-    let cin = prompt("entrer le cin du candidat pour supprimer : ")
+let cin = prompt("entrer le cin du candidat pour supprimer : ")
     for(let i = 0; i < candidats.length; i++){
         if(candidats[i].cin == cin){
             candidats.splice(i, 1);
-            console.log(`candidat ${candidats[i].nom} ${candidats[i].prenom} supprime`)
+            console.log(`candidat supprime`)
             prompt("clicker sur entree pour retourne aux menu")
             return
         }
@@ -172,6 +243,36 @@ function modifier(){
     prompt("clicke sur entree pour retourne aux menu")
 
 }
+
+// cherche d'un candidat
+function recherchcandidat(){
+    console.log("rechercher des candidats")
+    let checknum = prompt(`entre le nom de candidat : `)
+    for(let i = 0; i < candidats.length;i++){
+        if(checknum == candidats[i].nom){
+            console.log(`____________________ Candidat ${i + 1} _________________________________
+Identifiant     : ${candidats[i].cin}
+________________________________________________________________________
+nom             : ${candidats[i].nom}
+________________________________________________________________________
+prenom          : ${candidats[i].prenom}
+________________________________________________________________________
+Parti politique : ${candidats[i].partiPolitique}
+________________________________________________________________________
+Age             : ${candidats[i].age}
+________________________________________________________________________
+Nombre de votes : ${candidats[i].electeurs.length} notes
+________________________________________________________________________  \n\n`)
+ prompt("clicke sur entree pour retourne aux menu")
+ return
+    }
+        }
+        console.log(`candidat n'exist pas.`)
+        prompt("clicke sur entree pour retourne aux menu")
+return
+    }
+
+    
 
 // menu diyal program
 function menu(){
@@ -205,8 +306,10 @@ switch(number) {
         supprimercandidat()
         break
     case 6:
+        recherchcandidat()
         break
     case 7:
+        console.log("comming soon :)")
         break
     case 8:
         console.log("exit")
@@ -219,4 +322,5 @@ switch(number) {
 }
 
 }
+
 menu()
